@@ -87,7 +87,7 @@ function Xor {
     param ([string] $data) 
     $enc = [system.Text.Encoding]::UTF8
     $bytes = $enc.GetBytes($data)
-    $key = "3X3SS"
+    $key = "1337"
     for($i=0; $i -lt $bytes.count ; $i++)
     {
         $bytes[$i] = $bytes[$i] -bxor $key[$i%$key.Length]
